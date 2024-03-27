@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +46,10 @@ public class userLogin extends HttpServlet {
 		// TODO Auto-generated method stub
 				// Lista per memorizzare i prodotti
 				// Informazioni di connessione al database MySQL
+		
+		  String mail = request.getParameter("mail");
+		
+		
 			    String url = "jdbc:mysql://localhost:3306/"; // URL del database
 			    String dbName = "mydb"; // Nome del database
 			    String user = "root"; // Nome utente
@@ -80,6 +85,12 @@ public class userLogin extends HttpServlet {
 			            System.out.println("Errore durante la lettura dei dati dalla tabella 'prodotti':");
 			            e.printStackTrace();
 			        }
+		     // Ottieni l'oggetto ServletContext
+		        ServletContext context = getServletContext();
+		        
+		        context.setAttribute("user", mail);
+		        
+		        
 		         request.setAttribute("lista", listaProdotti);
 		        
 		        // Inoltra la richiesta alla pagina JSP per l'elaborazione ulteriore

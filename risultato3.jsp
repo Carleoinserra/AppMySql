@@ -9,14 +9,21 @@
 <body>
 <%
 String[] lista = (String[])request.getAttribute("lista");
+
+
 out.print("Hai ordinato");
 out.print("<hr>");
 for (String prod: lista){
 	out.print(prod);
 	out.print("<hr>");
 }
+out.print("Dovrai pagare: ");
+out.print("<hr>");
+
+
 
 %>
+<p>${somma }</p>
 Prodotti ordinati con successo
 </body>
 </html>

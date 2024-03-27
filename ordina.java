@@ -1,6 +1,11 @@
 package app;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,10 +42,38 @@ public class ordina extends HttpServlet {
 		String[] ordiniSelezionati = request.getParameterValues("ordini");
 		if (ordiniSelezionati != null) {
 		    for (String ordine : ordiniSelezionati) {
-		    	response.getWriter().println(ordine);
+		    	
+		    	 try {
+		    	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "Ilfoggia1");
+	            
+	            // Query per aggiornare la quantità del prodotto selezionato
+	            String updateQuery = "UPDATE prodotti SET quantita = quantita - 1 WHERE nome = (?)";
+	            
+	            // Creazione dello statement preparato
+	            PreparedStatement pstmt = conn.prepareStatement(updateQuery);
+	            pstmt.setString(1, ordine); // Assumendo che ordine sia l'ID del prodotto
+	            
+	            // Esecuzione dell'aggiornamento
+	            pstmt.executeUpdate();
+	            
+	            // Chiusura delle risorse
+	            pstmt.close();
+	            conn.close();
+	            
+	        } catch (SQLException e) {
+	            e.printStackTrace(); // Gestisci eventuali errori di connessione o query SQL
+	        }
+	    }
+		    
+		    request.setAttribute("lista", ordiniSelezionati);
+	        
+	        // Inoltra la richiesta alla pagina JSP per l'elaborazione ulteriore
+	        request.getRequestDispatcher("/risultato3.jsp").forward(request, response);
+	}
+		    	
 		    }
-		}
+		
 
 	}
 
-}
+

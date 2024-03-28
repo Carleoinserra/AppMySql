@@ -129,7 +129,7 @@ public class ordina extends HttpServlet {
 	        // Password dell'account email del mittente
 	        String password = "pnsk ijdh lpip xsow";
 	        // Indirizzo email del destinatario
-	        String to = "inserracarlo@gmail.com";
+	        String to = user;
 
 	        // Proprietà per la configurazione del server SMTP di Gmail
 	        Properties props = new Properties();
